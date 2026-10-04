@@ -1,5 +1,4 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 
 #defining file path
 
@@ -11,7 +10,12 @@ df.columns = df.columns.str.strip()
 df["Timestamp"]= pd.to_datetime(df["Timestamp"])
 df["Date"] = df["Timestamp"].dt.date
 
+#calculating mean in to one 
+df['Rating'] = df[['Sleep','Mood','Energy']].mean(axis=1)
 
-daily_summary = df.groupby("Date")[["Sleep","Energy","Mood"]].mean()
-print("Daily Averages")
-print(daily_summary)
+#defining brain dump 
+journal = df.dropna(subset=['Brain Dump'])
+
+for index, row in journal.iterrows():
+    clean_notes = str(row['Brain Dump']).strip()
+    print(f"{row['Date']} | Rating: {row['Rating']:.1f}/10 | {clean_notes}")
