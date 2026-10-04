@@ -16,6 +16,7 @@ df['Rating'] = df[['Sleep','Mood','Energy']].mean(axis=1)
 #defining brain dump 
 journal = df.dropna(subset=['Brain Dump'])
 
+#printing things
 for index, row in journal.iterrows():
     clean_notes = str(row['Brain Dump']).strip()
     print(f"{row['Date']} | Rating: {row['Rating']:.1f}/10 | {clean_notes}")
